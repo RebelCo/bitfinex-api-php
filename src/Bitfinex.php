@@ -1,5 +1,6 @@
 <?php 
 
+namespace Ochalhi;
 /**
 * Bitfinex PHP API
 *
