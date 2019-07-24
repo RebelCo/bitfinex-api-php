@@ -1,0 +1,7 @@
+{
+    "name": "ochalhi/bitfinex-api-php",
+    "type": "library",
+    "require": {
+	    "ext-curl":"*"
+    }
+}
