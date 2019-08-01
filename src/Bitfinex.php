@@ -885,7 +885,7 @@ class Bitfinex {
     * @param string $im_bank_swift          Optional. Intermediary bank SWIFT
     * @return mixed
     */
-    public function withdraw($withdraw_type, $walletselected, $amount, $address = '', $expressWire = 0, $bank_data = array()) {	
+    public function withdraw($withdraw_type, $walletselected, $amount, $address, $tag, $expressWire = 0, $bank_data = array()) {
     	$request = $this->endpoint('withdraw');
     	
     	$data = array(
@@ -896,13 +896,6 @@ class Bitfinex {
     	);
     	
     	switch ($withdraw_type) {
-            case 'bitcoin':
-            case 'litecoin':
-            case 'ethereum':
-            case 'tether':
-                $data['address'] = $address;
-
-                break;
             case 'wire':
                 $data['expressWire'] = $expressWire;
 
@@ -922,7 +915,12 @@ class Bitfinex {
                 $data['intermediary_bank_swift']    = array_key_exists('im_bank_swift', $bank_data) ? $bank_data['im_bank_swift'] : '';
 
                 break;
-    	}
+            default:
+                $data['address'] = $address;
+                if ($tag != null) {
+                    $data['payment_id'] = $tag;
+                }
+        }
 
     	return $this->send_auth_request($data);
     }
